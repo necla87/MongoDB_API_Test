@@ -1,20 +1,47 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import Event from '../models/Event.js';
 
 const router = express.Router();
 
-// Get all events
+// Middleware to validate ID
+const validateId = (req, res, next) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).json({ message: 'Invalid ID format' });
+  }
+  next();
+};
+
+// Get all events with pagination and filtering
 router.get('/', async (req, res) => {
   try {
-    const events = await Event.find();
-    res.json(events);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    // Build the filter object
+    const filter = {};
+    if (req.query.name) filter.name = new RegExp(req.query.name, 'i'); // case-insensitive regex
+    if (req.query.location) filter.location = new RegExp(req.query.location, 'i'); // case-insensitive regex
+    if (req.query.date) filter.date = new Date(req.query.date); // exact match on date
+
+    const events = await Event.find(filter).skip(skip).limit(limit);
+    const totalEvents = await Event.countDocuments(filter);
+    const totalPages = Math.ceil(totalEvents / limit);
+
+    res.json({
+      events,
+      totalEvents,
+      totalPages,
+      currentPage: page
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// Get a single event
-router.get('/:id', async (req, res) => {
+// Get a single event with ID validation
+router.get('/:id', validateId, async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: 'Event not found' });
@@ -41,8 +68,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Update an event
-router.put('/:id', async (req, res) => {
+// Update an event with ID validation
+router.put('/:id', validateId, async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: 'Event not found' });
@@ -60,13 +87,12 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Delete an event
-router.delete('/:id', async (req, res) => {
+// Delete an event with ID validation
+router.delete('/:id', validateId, async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id);
+    const event = await Event.findByIdAndDelete(req.params.id);
     if (!event) return res.status(404).json({ message: 'Event not found' });
 
-    await event.remove();
     res.json({ message: 'Event deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });

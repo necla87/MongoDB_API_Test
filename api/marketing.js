@@ -1,75 +1,41 @@
 import express from 'express';
-import Marketing from '../models/Marketing.js';
+import Guest from '../models/Guest.js';
 
 const router = express.Router();
 
-// Get all marketing campaigns
-router.get('/', async (req, res) => {
+// Get all guests for an event
+router.get('/event/:eventId', async (req, res) => {
   try {
-    const campaigns = await Marketing.find().populate('event');
-    res.json(campaigns);
+    const guests = await Guest.find({ event: req.params.eventId });
+    res.json(guests);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// Get a single marketing campaign
-router.get('/:id', async (req, res) => {
-  try {
-    const campaign = await Marketing.findById(req.params.id).populate('event');
-    if (!campaign) return res.status(404).json({ message: 'Campaign not found' });
-    res.json(campaign);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// Create a new marketing campaign
+// Add a guest to an event
 router.post('/', async (req, res) => {
-  const campaign = new Marketing({
-    campaignName: req.body.campaignName,
-    event: req.body.event,
-    channels: req.body.channels,
-    budget: req.body.budget,
-    startDate: req.body.startDate,
-    endDate: req.body.endDate
+  const guest = new Guest({
+    name: req.body.name,
+    email: req.body.email,
+    event: req.body.event
   });
   try {
-    const newCampaign = await campaign.save();
-    res.status(201).json(newCampaign);
+    const newGuest = await guest.save();
+    res.status(201).json(newGuest);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-// Update a marketing campaign
-router.put('/:id', async (req, res) => {
-  try {
-    const campaign = await Marketing.findById(req.params.id);
-    if (!campaign) return res.status(404).json({ message: 'Campaign not found' });
-
-    campaign.campaignName = req.body.campaignName;
-    campaign.event = req.body.event;
-    campaign.channels = req.body.channels;
-    campaign.budget = req.body.budget;
-    campaign.startDate = req.body.startDate;
-    campaign.endDate = req.body.endDate;
-
-    const updatedCampaign = await campaign.save();
-    res.json(updatedCampaign);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
-// Delete a marketing campaign
+// Delete a guest
 router.delete('/:id', async (req, res) => {
   try {
-    const campaign = await Marketing.findById(req.params.id);
-    if (!campaign) return res.status(404).json({ message: 'Campaign not found' });
+    const guest = await Guest.findById(req.params.id);
+    if (!guest) return res.status(404).json({ message: 'Guest not found' });
 
-    await campaign.remove();
-    res.json({ message: 'Campaign deleted' });
+    await guest.remove();
+    res.json({ message: 'Guest deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
