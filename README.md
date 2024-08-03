@@ -432,6 +432,14 @@ This API is designed for managing events, including creating events, managing gu
 ### Database
 MongoDB Atlas URL: 'mongodb+srv://neclasaglam87:necla4820@cluster0.hem47xr.mongodb.net/PVT23?retryWrites=true&w=majority',
 ### Postman Collection
-Public Postman Collection: https://www.postman.com/science-pilot-52329232/workspace/pvt/collection/33840924-1bdde997-2255-45c5-8cdd-75e94ca4def0?action=share&creator=33840924
+Public Postman Collection:
+
+https://www.postman.com/science-pilot-52329232/workspace/pvt/collection/33840924-c00cc16e-fd1a-4404-8d3a-e779f37fc0c3?action=share&creator=33840924
+
+
+https://elements.getpostman.com/redirect?entityId=33840924-c00cc16e-fd1a-4404-8d3a-e779f37fc0c3&entityType=collection
+
+
+
 ### Test Report
 Refer to the TEST_REPORT.md file in the repository for details on the testing process and results.

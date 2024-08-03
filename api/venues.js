@@ -13,16 +13,21 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get a single venue
 router.get('/:id', async (req, res) => {
+  console.log('Requesting venue with ID:', req.params.id);  // Add logging
   try {
     const venue = await Venue.findById(req.params.id);
     if (!venue) return res.status(404).json({ message: 'Venue not found' });
     res.json(venue);
   } catch (err) {
+    console.error('GET Error:', err);  // Log detailed error
     res.status(500).json({ message: err.message });
   }
 });
+
+
+
+
 
 // Create a new venue
 router.post('/', async (req, res) => {
@@ -46,10 +51,11 @@ router.put('/:id', async (req, res) => {
     const venue = await Venue.findById(req.params.id);
     if (!venue) return res.status(404).json({ message: 'Venue not found' });
 
-    venue.name = req.body.name;
-    venue.location = req.body.location;
-    venue.capacity = req.body.capacity;
-    venue.availability = req.body.availability;
+    // Update venue fields
+    venue.name = req.body.name || venue.name;
+    venue.location = req.body.location || venue.location;
+    venue.capacity = req.body.capacity || venue.capacity;
+    venue.availability = req.body.availability || venue.availability;
 
     const updatedVenue = await venue.save();
     res.json(updatedVenue);
@@ -61,14 +67,16 @@ router.put('/:id', async (req, res) => {
 // Delete a venue
 router.delete('/:id', async (req, res) => {
   try {
-    const venue = await Venue.findById(req.params.id);
-    if (!venue) return res.status(404).json({ message: 'Venue not found' });
-
-    await venue.remove();
+    const result = await Venue.deleteOne({ _id: req.params.id });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Venue not found' });
+    }
     res.json({ message: 'Venue deleted' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Delete Error:', err);  // Log detailed error
+    res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 export default router;
