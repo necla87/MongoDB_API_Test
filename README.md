@@ -11,7 +11,6 @@
   - [Running the Server](#running-the-server)
 - [API Endpoints](#api-endpoints)
   - [Events](#events)
-  - [Guests](#guests)
   - [Venues](#venues)
   - [Marketing](#marketing)
 - [Testing](#testing)
@@ -23,7 +22,7 @@
 
 ## Introduction
 
-This API is designed for managing events, including creating events, managing guest lists, booking venues, and marketing events. It uses MongoDB as the database and follows RESTful principles.
+This API is designed for managing events, including creating events, booking venues, and marketing events. It uses MongoDB as the database and follows RESTful principles.
 
 ## Setup
 
@@ -179,54 +178,6 @@ This API is designed for managing events, including creating events, managing gu
     ```json
     {
       "message": "Event deleted"
-    }
-    ```
-
-### Guests
-
-- **GET /api/guests/event/:eventId**
-  - **Description**: Retrieve all guests for a specific event.
-  - **Response**: 200 OK, array of guest objects.
-  - **Example**:
-    ```json
-    [
-      {
-        "_id": "60b8d5f5b5e4a12c6c8f5678",
-        "name": "John Doe",
-        "email": "john@example.com",
-        "event": "60b8d5f5b5e4a12c6c8f1234"
-      }
-    ]
-    ```
-
-- **POST /api/guests**
-  - **Description**: Add a new guest to an event.
-  - **Request Body**:
-    ```json
-    {
-      "name": "John Doe",
-      "email": "john@example.com",
-      "event": "60b8d5f5b5e4a12c6c8f1234"
-    }
-    ```
-  - **Response**: 201 Created, guest object.
-  - **Example**:
-    ```json
-    {
-      "_id": "60b8d5f5b5e4a12c6c8f5678",
-      "name": "John Doe",
-      "email": "john@example.com",
-      "event": "60b8d5f5b5e4a12c6c8f1234"
-    }
-    ```
-
-- **DELETE /api/guests/:id**
-  - **Description**: Delete a guest by ID.
-  - **Response**: 200 OK, deletion confirmation.
-  - **Example**:
-    ```json
-    {
-      "message": "Guest deleted"
     }
     ```
 
@@ -425,12 +376,12 @@ This API is designed for managing events, including creating events, managing gu
 - Verify the status codes, response formats, and data correctness.
 
 ### Automated Testing
-- Run the automated tests with Jest:
-  ```bash
-  npm test
+- Run the automated tests with Postman:
+- use the Collection Runner to execute the tests.
 
 ### Database
 MongoDB Atlas URL: 'mongodb+srv://neclasaglam87:necla4820@cluster0.hem47xr.mongodb.net/PVT23?retryWrites=true&w=majority',
+
 ### Postman Collection
 Public Postman Collection:
 
