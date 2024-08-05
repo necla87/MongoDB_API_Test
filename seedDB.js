@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import { faker } from '@faker-js/faker';
 import config from './config.js';
 import Event from './models/Event.js';
-import Guest from './models/Guest.js';
 import Venue from './models/Venue.js';
 import Marketing from './models/Marketing.js';
 
@@ -14,6 +13,7 @@ mongoose.connect(mongodbUri, { useNewUrlParser: true, useUnifiedTopology: true }
 
 const createFakeData = async () => {
   for (let i = 0; i < 50; i++) {
+    // Create a new event
     const event = new Event({
       name: faker.lorem.words(),
       date: faker.date.future(),
@@ -23,13 +23,7 @@ const createFakeData = async () => {
     });
     await event.save();
 
-    const guest = new Guest({
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      event: event._id
-    });
-    await guest.save();
-
+    // Create a new venue
     const venue = new Venue({
       name: faker.company.companyName(),
       location: faker.address.city(),
@@ -38,6 +32,7 @@ const createFakeData = async () => {
     });
     await venue.save();
 
+    // Create a new marketing campaign
     const marketing = new Marketing({
       campaignName: faker.company.catchPhrase(),
       event: event._id,

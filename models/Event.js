@@ -4,8 +4,8 @@ const eventSchema = new mongoose.Schema({
   name: { type: String, required: true },
   date: { type: Date, required: true },
   location: { type: String, required: true },
-  description: { type: String },
-  attendees: { type: Number, default: 0 }
+  description: { type: String, required: true },
+  attendees: { type: Number, required: true }
 });
 
 const Event = mongoose.model('Event', eventSchema);

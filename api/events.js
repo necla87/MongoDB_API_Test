@@ -74,11 +74,11 @@ router.put('/:id', validateId, async (req, res) => {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: 'Event not found' });
 
-    event.name = req.body.name;
-    event.date = req.body.date;
-    event.location = req.body.location;
-    event.description = req.body.description;
-    event.attendees = req.body.attendees;
+    event.name = req.body.name || event.name;
+    event.date = req.body.date || event.date;
+    event.location = req.body.location || event.location;
+    event.description = req.body.description || event.description;
+    event.attendees = req.body.attendees || event.attendees;
 
     const updatedEvent = await event.save();
     res.json(updatedEvent);

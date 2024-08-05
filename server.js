@@ -2,9 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import config from './config.js';
 import eventRoutes from './api/events.js';
-import guestRoutes from './api/guests.js';
 import venueRoutes from './api/venues.js';
-import marketingRoutes from './api/marketing.js';
+import marketingRoutes from './api/marketing.js'; // Add this import
 
 const app = express();
 const port = config.port || 3000;
@@ -15,9 +14,8 @@ app.use(express.json());
 
 // Register API routes
 app.use('/api/events', eventRoutes);
-app.use('/api/guests', guestRoutes);
 app.use('/api/venues', venueRoutes);
-app.use('/api/marketing', marketingRoutes);
+app.use('/api/marketing', marketingRoutes); // Register the new marketing routes
 
 // Connect to MongoDB and start the server
 mongoose.connect(mongodbUri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -36,3 +34,4 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
+
