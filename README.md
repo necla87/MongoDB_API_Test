@@ -375,9 +375,63 @@ This API is designed for managing events, including creating events, booking ven
 - Use Postman to test each endpoint.
 - Verify the status codes, response formats, and data correctness.
 
+1. **8. HTTP**
+   *Manually verify HTTP method handling for various endpoints, ensuring correct status codes and responses for each method.*
+
+2. **9. Verify and Handle the Updates**
+   *Manually test the API's handling of updates to records, ensuring that changes are accurately reflected and persisted.*
+
+3. **GET 1. All Venues**
+   *Fetch a list of all available venues. This manual test confirms that the data is returned correctly and in the expected format.*
+
+4. **GET 2. JSON**
+   *Ensure that the API consistently returns JSON-formatted responses for GET requests, maintaining data integrity.*
+
+5. **POST 3. Invalid**
+   *Manually test the API's response to invalid data submissions, verifying proper error handling and messaging.*
+
+6. **GET 4. Filtering**
+   *Manually validate the API's filtering capabilities, ensuring accurate results based on specified filters.*
+
+7. **GET 5. Pagination**
+   *Manually check the implementation of pagination, ensuring that data is divided into pages appropriately.*
+
+8. **POST 6. Special Characters**
+   *Manually verify that the API can correctly handle special characters and non-English text in input and response data.*
+
+9. **POST 7. Multiple Requests**
+   *Manually assess the API's performance under concurrent requests, ensuring stability and data consistency.*
+
 ### Automated Testing
 - Run the automated tests with Postman:
 - use the Collection Runner to execute the tests.
+
+ **8. HTTP Methods**
+   *Test the correct handling of various HTTP methods (GET, POST, PUT, DELETE) across all endpoints. This includes verifying status codes, data formats, and response content.*
+
+ **9. Handle the Updates for Events**
+   *Ensure that the API correctly processes updates to existing events, including modifications to event details and verifying the changes in subsequent responses.*
+
+ **GET 1. All Events**
+   *Fetch a list of all available events. This test confirms that the API returns the expected data format and content.*
+
+ **GET 2. JSON Format**
+   *Validate that the API returns responses in JSON format for GET requests, ensuring data consistency and format compliance.*
+
+ **GET 3. Invalid Request**
+   *Test the API's error handling by making invalid requests. This includes verifying that the API returns appropriate error codes and messages.*
+
+ **GET 4. Filtering**
+   *Check the API's ability to filter events based on specified criteria. This test verifies that the correct subset of data is returned when filters are applied.*
+
+ **GET 5. Pagination**
+   *Test the API's implementation of pagination, ensuring that responses are correctly segmented into pages when a large dataset is requested.*
+
+ **POST 6. Special Characters**
+   *Verify that the API handles special characters and non-English text correctly in both input and output data.*
+
+ **POST 7. Multiple Requests**
+   *Assess the API's ability to manage concurrent requests. This test ensures that multiple requests are processed correctly and without data inconsistency.*
 
 ### Database
 MongoDB Atlas URL: 'mongodb+srv://neclasaglam87:necla4820@cluster0.hem47xr.mongodb.net/PVT23?retryWrites=true&w=majority',
